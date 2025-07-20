@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Digest App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #eef2f3, #ffffff); /* soft clean bg */
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px 30px;
+            max-width: 750px;
+            margin: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 14px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 20px;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            margin-top: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .article {
+            margin-top: 25px;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .success {
+            color: green;
+            font-weight: 600;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📬 Personalized News Digest</h1>
+
+        <form method="POST">
+            <label>Enter Topic:</label>
+            <input type="text" name="topic" placeholder="e.g. AI, Climate, Sports" required>
+
+            <label>Select Frequency:</label>
+            <select name="frequency">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="none">Unsubscribe</option>
+            </select>
+
+            <label>Enter Your Email:</label>
+            <input type="email" name="user_email" placeholder="your@email.com" required>
+
+            <label>Enter Secret Code:</label>
+            <input type="text" name="secret" placeholder="Ask Anshu for access code" required>
+
+            <input type="submit" value="📨 Get News & Save Preferences">
+        </form>
+
+        {% if saved %}
+            <p class="success">✅ Preferences saved! You'll receive news on "{{ topic }}" {{ frequency }}.</p>
+        {% endif %}
+
+        {% if topic %}
+            <h2>Top 5 Headlines about "{{ topic }}"</h2>
+            {% for article in news %}
+                <div class="article">
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.description }}</p>
+                    <a href="{{ article.url }}" target="_blank">Read More</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
