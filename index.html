@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Digest App</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        form input[type="text"], form select {
+            padding: 10px; width: 300px; margin-right: 10px;
+        }
+        form input[type="submit"] {
+            padding: 10px 20px; background-color: #4CAF50; color: white; border: none;
+        }
+        .article {
+            margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #fff;
+        }
+        .success {
+            color: green; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📬 News Digest</h1>
+
+    <form method="POST">
+        <label>Enter Topic:</label>
+        <input type="text" name="topic" required>
+
+        <label>Select Frequency:</label>
+        <select name="frequency">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="none">Unsubscribe></option>
+        </select>
+
+        <input type="submit" value="Get News & Save Preferences">
+    </form>
+
+    {% if saved %}
+        <p class="success">✅ Preferences saved! You'll receive news on "{{ topic }}" {{ frequency }}.</p>
+    {% endif %}
+
+    {% if topic %}
+        <h2>Top 5 Headlines about "{{ topic }}"</h2>
+        {% for article in news %}
+            <div class="article">
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.description }}</p>
+                <a href="{{ article.url }}" target="_blank">Read More</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
